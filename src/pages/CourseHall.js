@@ -1,9 +1,8 @@
+import CartCourse from '../components/CartCourse'
 const CourseHall=()=>{
     return(
         <>
-            <p>
-                CourseHall
-            </p>
+            <CartCourse/>
         </>
     )
 }

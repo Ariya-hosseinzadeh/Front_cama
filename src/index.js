@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from '../src/components/Context/AuthContext'
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
@@ -20,6 +21,7 @@ import Course from "./pages/Course"
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   
+    <AuthProvider>
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Layout/>}>
@@ -37,7 +39,9 @@ root.render(
         </Route>
       </Routes>
     </BrowserRouter>
+    </AuthProvider>
   
+
 );
 
 // If you want to start measuring performance in your app, pass a function

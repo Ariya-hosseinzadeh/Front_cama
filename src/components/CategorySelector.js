@@ -10,7 +10,7 @@ const CategorySelector = ({ Select }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/tag/category/");
+        const response = await fetch("https://127.0.0.1:8000/tag/category/");
         const data = await response.json();
         setCategories(data);
       } catch (error) {

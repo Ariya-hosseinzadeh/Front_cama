@@ -18,21 +18,29 @@ export default function AuthPage() {
   });
   async function LoginUser(userData) {
     try {
-      let response = await fetch("http://127.0.0.1:8000/users/login/", {
+      let response = await fetch("https://127.0.0.1:8000/users/login/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
+        credentials: 'include' // برای ارسال کوکی از سمت سرور
+        
         
       });
+      if(response.ok){
+        console.log(response)
+      }
   
       if (!response.ok) {
         let errorData = await response.json(); // دریافت متن خطا از بک‌اند
         throw errorData; // ارسال خطا به بخش catch
         
       }
-      console.log(userData);
+      
       let data = await response.json();
-      console.log("ورود موفق :", data);
+      sessionStorage.setItem('accessToken', data.access);
+      // sessionStorage.setItem('user',data.user.id)
+      console.log("ورود موفق :");
+      console.log(sessionStorage.getItem('accessToken'))
     } catch (error) {
       console.error("خطا:", error);
       return error
@@ -41,7 +49,7 @@ export default function AuthPage() {
   
   async function Signup(userData) {
     try {
-      let response = await fetch("http://127.0.0.1:8000/users/signup/", {
+      let response = await fetch("https://127.0.0.1:8000/users/signup/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
