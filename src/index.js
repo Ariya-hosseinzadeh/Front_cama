@@ -16,17 +16,22 @@ import Univercity from "./pages/Univercity"
 import Nopage from "./pages/Nopage"
 import AboutCama from "./pages/AboutCama"
 import Course from "./pages/Course"
-
+import ScrollFix from './components/ScrollFix';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  
+  <>
+  <ToastContainer autoClose={2000} />
     <AuthProvider>
     <BrowserRouter>
+    <ScrollFix/>
       <Routes>
         <Route path='/' element={<Layout/>}>
           <Route path='profile' element={<Profile/>} />
           <Route path='sing-in' element={<Signin/>}/>
+          <Route path='about-cama' element={<AboutCama/>}/>
           <Route index element={<Home/>}/>
           <Route path='course-hall' element={<CourseHall/>}/>
           <Route path='course' element={<Course/>}/>
@@ -34,13 +39,13 @@ root.render(
           <Route path='univercity' element={<Univercity/>}/>
           <Route path='complaint' element={<Complaint/>}/>
           <Route path='community' element={<Community/>}/>
-          <Route path='about-cama' element={<AboutCama/>}/>
           <Route path='*' element={<Nopage/>}/> 
         </Route>
       </Routes>
     </BrowserRouter>
     </AuthProvider>
-  
+    
+    </>
 
 );
 

@@ -3,9 +3,11 @@ import useCourseValidation from "../hooks/useCourseValidation";
 import CategorySelector from "../components/CategorySelector"
 import { AuthContext } from "../components/Context/AuthContext";
 const Course=()=>{
+
 const [isloadin,setIsloading]=useState(false)
 const [category,setCategory]=useState('')
 const[CouresCreate,setCourseRequest]=useState(true)
+const[myresponse,setResponse]=useState()
 const { values, errors, handleChange, isValid }=useCourseValidation({
     Title:"",
     description:"",
@@ -18,21 +20,27 @@ const { values, errors, handleChange, isValid }=useCourseValidation({
 
 const { fetchWithAuth } = useContext(AuthContext);
 const{user}=useContext(AuthContext)
+console.log(user)
 const[isError,setError]=useState({
-    Title:"",
-    description:"",
-    CapacityCourse:"",
-    CountClass:"",
-    SuggestedTime:"",
-    images:"",
-    category:"",
+  Title:'',
+  description:'',
+  CapacityCourse:'',
+  CountClass:'',
+  SuggestedTime:'',
+  images:'',
+  category:'',
+  additionError:'',
+  Repetition:''
 
 })
 
+
 async function createCourse(formData){
+  
     try {
         let response = await fetchWithAuth("https://127.0.0.1:8000/classroom/create-course/", {
           method: "POST",
+          credentials: "include",
           headers: {
             
             // "Content-Type": "application/json", وقتی بصورت formdata میفرستیم نباید این تعیین شود
@@ -41,59 +49,67 @@ async function createCourse(formData){
           body: formData,
           
         });
-
+        if(response.ok){
+          
+        let data = await response.json();
+        console.log(data)
+        setResponse({...data})
+        setIsloading(false)
+        }
     
         if (!response.ok) {
           let errorData = await response.json(); // دریافت متن خطا از بک‌اند
+          setIsloading(false)
+          console.log(errorData)
           throw errorData; // ارسال خطا به بخش catch
           
         }
         
-        let data = await response.json();
-        console.log('success:',data)
         
       } catch (error) {
-        console.error("خطا:", error);
-        setError(
-    {Title:error.Title || '',
-    description:error.description || '',
-    CapacityCourse:error.CapacityCourse || '',
-    CountClass:error.CountClass|| '',
-    SuggestedTime:error.SuggestedTime || '',
-    images:error.images || '',
-    category:error.category || '',}
-        )
+      
+       setError({...error})  
         
       }
 }
 async function requestCourse(courseData){
     try {
+      setResponse({...{}})
         let response = await fetchWithAuth("https://127.0.0.1:8000/classroom/request-course/", {
   method: "POST",
   credentials: "include",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify(courseData),
 });
+        if(response.ok){
         
+        let data = await response.json();
+        console.log("انجام شد", data);
+        setResponse(data)
+        setIsloading(false)
+        console.log(response)
+        }
+
         if (!response.ok) {
           let errorData = await response.json(); // دریافت متن خطا از بک‌اند
+          setIsloading(false)
           throw errorData; // ارسال خطا به بخش catch
           
         }
         
-        let data = await response.json();
-        console.log("انجام شد", data);
+        
       } catch (error) {
-        console.error("خطا:", error);
-        return error
+        
+        setError({...error})
+        
         
       }
 
 }
 const handleSubmit=(e)=>{
     e.preventDefault();
-    
-    
+     setError({...{}})
+     console.log(user)
         if(isValid){
             
             if (CouresCreate){
@@ -108,12 +124,14 @@ const handleSubmit=(e)=>{
                 formData.append("images", values.images);
                 
                  // ارسال فایل تصویر
+                 setIsloading(true)
                  createCourse(formData)
             }
                
             }
             else{   
                 values.category=category.id
+                setIsloading(true)
                 requestCourse(values)
                 
             }
@@ -122,6 +140,13 @@ const handleSubmit=(e)=>{
 }
     return(
         <>
+      {isloadin?<div>
+        {user==null?<div><p> برای استفاده از خدمات<span>وارد شوید </span></p></div>:<div><p> is Loading...</p></div>
+        
+      
+      }
+      </div>:
+      <div>
             <div className="max-w-2xl mx-auto bg-white p-6 shadow-lg rounded-xl">
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">
         {CouresCreate ? "درخواست تشکیل کلاس" : "ایجاد کلاس"}
@@ -137,7 +162,8 @@ const handleSubmit=(e)=>{
             value={values.Title}
             onChange={handleChange}
             placeholder="عنوان کلاس را وارد کنید"
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            className={`w-full px-4 py-2 border rounded-lg ${errors.Title&& `ring-2 ring-red-500`} focus:ring-2 focus:ring-blue-500 `}
+            required
           />
           {errors.Title && <p className="text-red-500 text-sm">{errors.Title}</p>}
         </div>
@@ -151,7 +177,8 @@ const handleSubmit=(e)=>{
             value={values.description}
             onChange={handleChange}
             placeholder="توضیحات کلاس"
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            className={`w-full px-4 py-2 border rounded-lg ${errors.description&& `ring-2 ring-red-500`} focus:ring-2 focus:ring-blue-500`}
+            required
           />
           {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
         </div>
@@ -165,7 +192,8 @@ const handleSubmit=(e)=>{
             value={values.CountClass}
             onChange={handleChange}
             placeholder="تعداد جلسات کلاس"
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            className={`w-full px-4 py-2 border rounded-lg ${errors.CountClass&& `ring-2 ring-red-500`} focus:ring-2 focus:ring-blue-500`}
+            required
           />
           {errors.CountClass && <p className="text-red-500 text-sm">{errors.CountClass}</p>}
         </div>
@@ -179,6 +207,7 @@ const handleSubmit=(e)=>{
             value={values.SuggestedTime}
             onChange={handleChange}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            required
           />
           {isError.SuggestedTime && <p className="text-red-500 text-sm">{isError.SuggestedTime}</p>}
         </div>
@@ -186,8 +215,19 @@ const handleSubmit=(e)=>{
         {/* انتخاب دسته‌بندی */}
         <div>
           <CategorySelector Select={setCategory} />
+          {isError.category&&<p className="text-red-500 text-sm">{isError.category}</p>}
         </div>
-
+          {
+            !CouresCreate&&(
+              <div>
+                {isError.Repetition?<p className="text-red-500 text-sm">{isError.Repetition}</p>:(
+              <>
+                {myresponse&&<p className="text-red-500 text-sm">{myresponse.status}</p>}
+              </>
+             )}
+              </div>
+            )
+          }
         {/* اطلاعات اضافی در حالت ایجاد کلاس */}
         {CouresCreate && (
           <>
@@ -217,6 +257,13 @@ const handleSubmit=(e)=>{
               />
               {isError.images && <p className="text-red-500 text-sm">{isError.images}</p>}
             </div>
+            <div>
+             {isError.Repetition?<p className="text-red-500 text-sm">{isError.Repetition}</p>:(
+              <>
+                {myresponse&&<p className="text-red-500 text-sm">{myresponse.status}</p>}
+              </>
+             )}
+            </div>
           </>
         )}
 
@@ -234,6 +281,8 @@ const handleSubmit=(e)=>{
         {CouresCreate ? "متقاضی ایجاد کلاس" : "تشکیل ایجاد یک کلاس"}
       </button>
     </div>
+    </div>
+}
         </>
     )
 }

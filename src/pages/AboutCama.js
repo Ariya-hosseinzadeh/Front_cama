@@ -1,11 +1,15 @@
-import RequestCourseCart from "../components/CartCourse"
-import DetailCourse from "../components/DetailCourse"
+
 const AboutCama=()=>{
-    return(
-        <>
-            <RequestCourseCart/>
-            
-        </>
-    )
+
+
+return (
+    <>
+        <div>
+            <p>tres</p>
+        </div>
+        
+    </>
+);
+
 }
 export default AboutCama

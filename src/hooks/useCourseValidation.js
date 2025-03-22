@@ -27,10 +27,10 @@ export default function useCourseValidation(initialState){
 }
 const isValid = () => {
     const newErrors = {};
-    if (!validateTitle(values.Title)) newErrors.Title='i';
-    if (!validateDescription(values.description)) newErrors.description='i';
-    if (!validateCountCourse(values.CountClass)) newErrors.CountClass='d';
-    if(!validateCapicityCourse(values.CapacityCourse)) newErrors.CountClass='';
+    if (!validateTitle(values.Title)) newErrors.Title="لطفا عنوان کوتاه و دربرگیرنده انتخاب کنید برای توضیحات اضافی به فیلد بعدی مراجعه کنید";
+    if (!validateDescription(values.description)) newErrors.description=" توضیحات شما نمی تواند کمتر از 30 کاراکتر باشد";
+    if (!validateCountCourse(values.CountClass)) newErrors.CountClass=" ورودی نامعتبر";
+    if(!validateCapicityCourse(values.CapacityCourse)) newErrors.CountClass=" ورودی نامعتبر";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
 }

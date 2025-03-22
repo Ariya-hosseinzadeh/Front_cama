@@ -1,15 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import { Outlet,NavLink,Link} from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import logo from '../static/logo/Kama.webp'
-const Layout = () => {
-  const [navbar, setNavbar] = useState(false);
+import { AuthContext } from "../components/Context/AuthContext";
+import { label } from "framer-motion/client";
 
+const Layout = () => {
+
+  const [navbar, setNavbar] = useState(false);
+  const{user}=useContext(AuthContext)
+  const{logout}=useContext(AuthContext)
+  
   // جلوگیری از اسکرول صفحه هنگام باز بودن منو
   useEffect(() => {
     document.body.style.overflow = navbar ? "hidden" : "auto";
   }, [navbar]);
-
+  
   return (
     <div className="bg-[#F0FDF4] min-h-screen">
       {/* نوار بالای صفحه */}
@@ -56,9 +62,22 @@ const Layout = () => {
         </NavLink>
       </li>
     ))} */}
+    <li className="w-full md:w-auto flex justify-center">
+    {user ? (
+        <button onClick={logout} className="block px-4 py-2 rounded-md w-full md:w-auto text-center transition hover:bg-[#16A34A] focus:bg-slate-700 active:bg-violet-700 text-white">خروج</button>
+      ) : (
+        <>
+          <NavLink to="/sing-in" className={({ isActive }) =>`block px-4 py-2 rounded-md w-full md:w-auto text-center transition ${
+           isActive ? "bg-violet-700 text-white" : "hover:bg-[#16A34A]"
+          }`} onClick={() => setNavbar(!navbar)}>"ثبت نام/ورود</NavLink>
+          
+        </>
+      )}
+    </li>
     {[
-      { to: "/", label: "خانه" },
-      { to: "/sing-in", label: "ثبت نام/ورود" },
+      // { to:`${user?'/log-out':'/sing-in'}`, label: `${user?"خروج":"ثبت نام/ورود"}` },
+      // // {to:'/sing-in',label:'ثبت نام/ورود'},
+      { to: "/", label: "خانه" },  
       { to: "/profile", label: "صفحه شخصی" },
       { to: "/course-hall", label: "تالار انتظار" },
       { to: "/course-record", label: "دوره‌ها" },
@@ -71,7 +90,7 @@ const Layout = () => {
           to={item.to}
           className={({ isActive }) =>
             `block px-4 py-2 rounded-md w-full md:w-auto text-center transition ${
-              isActive ? "bg-violet-700 text-white" : "hover:bg-[#16A34A]"
+              isActive ? "bg-violet-700 text-white" : "hover:bg-[#16A34A] focus:bg-slate-700"
             }`
           }
           onClick={() => setNavbar(!navbar)}

@@ -6,8 +6,9 @@ import image2 from '../static/Home/main/2.png'
 import image4 from '../static/Home/main/4.png'
 import image3 from '../static/Home/main/3.png'
 import image5 from '../static/Home/main/5.webp'
+
 const Home=()=>{
-    
+  
     return(
         <>
            <div className="flex flex-col items-center ">

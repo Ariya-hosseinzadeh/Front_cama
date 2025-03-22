@@ -39,11 +39,14 @@ const RequestCourseCart = () => {
                                         <img src={item.images} alt="image class"/>
                                     </li>
                                 )}
-                                <li>{item.Title}</li>
-                                <li>{item.description}</li>
-                                <li>{item.price}</li>
+                                
+                                <li>  عنوان کلاس : {item.Title}  </li>
+                                <li>توضیحات:{item.description}</li>
+                                <li>  قیمت :{item.price}</li>
+                                <li>ایجاد کننده : {item.CodeCreator} </li>
+                                <li><img src={item.image} alt="images item"/></li>
                                 <div>
-                                <button onClick={() => handleShowDetails(item.id, item.content_type)}>
+                                <button onClick={() => handleShowDetails(item.object_id, item.content_type)}>
                                      جزئیات
                                 </button>
                                     <div>
