@@ -1,7 +1,6 @@
 import { useState, useEffect,useContext } from "react";
 import { Outlet,NavLink,Link} from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import logo from '../static/logo/Kama.webp'
 import { AuthContext } from "../components/Context/AuthContext";
 import { label } from "framer-motion/client";
 
@@ -34,9 +33,7 @@ const Layout = () => {
             <button className="text-slate-900 dark:text-white text-xl">Lang</button>
             <button className="text-slate-900 dark:text-white text-xl">Dark</button>
           </div>
-          <div className="w-24 bg-white h-5/6">
-            <img src={logo} />
-          </div>
+          
         </div>
 
         {/* نوار ناوبری */}

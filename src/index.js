@@ -11,7 +11,7 @@ import CourseRecord from './pages/CourseRecord';
 import Complaint from './pages/Complaint';
 import Community from "./pages/Community";
 import Signin from "./pages/Singin";
-import Profile from "./pages/Profile";
+import ProfileLayout from "./pages/ProfileLayout";
 import Univercity from "./pages/Univercity"
 import Nopage from "./pages/Nopage"
 import AboutCama from "./pages/AboutCama"
@@ -19,7 +19,11 @@ import Course from "./pages/Course"
 import ScrollFix from './components/ScrollFix';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import InformationProfile from './Profile/InformationPrivate'
+import Articles from './Profile/Articles'
+import Topics from './Profile/Topics'
+import Messages from './Profile/Messages'
+import InformationCorse from './Profile/InformationCourse'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <>
@@ -29,7 +33,13 @@ root.render(
     <ScrollFix/>
       <Routes>
         <Route path='/' element={<Layout/>}>
-          <Route path='profile' element={<Profile/>} />
+          <Route path='profile' element={<ProfileLayout/>} >
+            <Route path='informatoion-private' element={<InformationProfile/>}/>
+            <Route path='information-course' element={<InformationCorse/>}/>
+            <Route path='articles' element={<Articles/>}/>
+            <Route path='messages' element={<Messages/>}/>
+            <Route path='topics' element={<Topics/>}/>
+          </Route>
           <Route path='sing-in' element={<Signin/>}/>
           <Route path='about-cama' element={<AboutCama/>}/>
           <Route index element={<Home/>}/>

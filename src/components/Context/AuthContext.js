@@ -139,7 +139,9 @@ async function fetchWithAuth(url, options = {}) {
           headers: { Authorization: `Bearer ${newToken}`, ...options.headers },
         });
       } catch (error) {
-        
+        if(res.status===401){
+          toast.error('لطفا ابتدا وارد شوید')
+        }
         logout();
         throw error;
       }

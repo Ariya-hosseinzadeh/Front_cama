@@ -19,9 +19,11 @@ export default function useProposalRequest(initialState){
     }
     const isValid = () => {
         const newErrors = {};
-        if(!validateMessage(values.message)){newErrors[values.message]='ورودی نا معتبر'}
-        if(!validateMessage(values.price)){newErrors[values.price]='ورودی نا معتبر'}
+        if(!validateMessage(values.message)){newErrors.message=' لطفا برای پیشنهادتان را توضیحات بیشتری وارد کنید '}
+        if(!validateMessage(values.price)){newErrors.price='لطفا برای پیشنهادتان قیمت را تعیین کنید'}
+        
         setErrors(newErrors);
+        
         return Object.keys(newErrors).length === 0;
     }
     return { values, errors, handleChange, isValid };
