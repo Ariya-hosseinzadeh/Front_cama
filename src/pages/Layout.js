@@ -2,7 +2,6 @@ import { useState, useEffect,useContext } from "react";
 import { Outlet,NavLink,Link} from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { AuthContext } from "../components/Context/AuthContext";
-import { label } from "framer-motion/client";
 
 const Layout = () => {
 
@@ -29,10 +28,10 @@ const Layout = () => {
           
 
           {/* دکمه‌های تنظیمات */}
-          <div className="flex gap-4">
-            <button className="text-slate-900 dark:text-white text-xl">Lang</button>
-            <button className="text-slate-900 dark:text-white text-xl">Dark</button>
-          </div>
+          {/* <div className="flex gap-4">
+            <button className="text-slate-900 dark:text-white text-xl"></button>
+            <button className="text-slate-900 dark:text-white text-xl"></button>
+          </div> */}
           
         </div>
 

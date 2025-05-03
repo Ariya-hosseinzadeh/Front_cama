@@ -1,7 +1,17 @@
+
+import { Outlet } from "react-router-dom"
+
+
 const InformationCourse=()=>{
+    
     return(
         <>
-            InformationCourse
+            <div>
+                
+            </div>
+            <div>
+                <Outlet/>
+            </div>
         </>
     )
 }

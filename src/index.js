@@ -24,6 +24,13 @@ import Articles from './Profile/Articles'
 import Topics from './Profile/Topics'
 import Messages from './Profile/Messages'
 import InformationCorse from './Profile/InformationCourse'
+import MyCourseCreate from "./Profile/InformationCourse/MyCourseCreate";
+import MyCourseRequest from './Profile/InformationCourse/MyCourseRequest';
+import InventationSend from './Profile/InformationCourse/InventationSend';
+import Suggestions from './Profile/InformationCourse/Suggestions';
+import InventationRecieve from './Profile/InformationCourse/InventationRecieve';
+import ProposalSend from './Profile/InformationCourse/ProposalSend';
+import ProposalRecieve from './Profile/InformationCourse/ProposalRecieve';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <>
@@ -35,7 +42,14 @@ root.render(
         <Route path='/' element={<Layout/>}>
           <Route path='profile' element={<ProfileLayout/>} >
             <Route path='informatoion-private' element={<InformationProfile/>}/>
-            <Route path='information-course' element={<InformationCorse/>}/>
+            <Route path='information-course' element={<InformationCorse/>}>
+              <Route path='my-course-create' element={<MyCourseCreate/>}/>
+              <Route path='my-course-request' element={<MyCourseRequest/>}/>
+              <Route path='my-course-request/inventation-send' element={<InventationSend/>}/>
+              <Route path='my-course-request/inventation-recieve' element={<InventationRecieve/>}/>
+              <Route path='my-course-request/proposal-send' element={<ProposalSend/>}/>
+              <Route path='my-course-request/proposal-recieve' element={<ProposalRecieve/>}/>
+            </Route>
             <Route path='articles' element={<Articles/>}/>
             <Route path='messages' element={<Messages/>}/>
             <Route path='topics' element={<Topics/>}/>

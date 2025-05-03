@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [accessToken, setAccessToken] = useState(() => sessionStorage.getItem('accessToken'));
   const [user, setUser] = useState(null);
+  const [changeCourse,setChangeCourse]=useState(false)
   const InitialAccessToken=(token)=>{
     
     setAccessToken(token)
@@ -150,7 +151,7 @@ async function fetchWithAuth(url, options = {}) {
     return res;
   }
   return (
-    <AuthContext.Provider value={{ user, accessToken, login, logout, refreshToken,fetchWithAuth,userRegister,InitialAccessToken }}>
+    <AuthContext.Provider value={{ user, accessToken,changeCourse,setChangeCourse, login, logout, refreshToken,fetchWithAuth,userRegister,InitialAccessToken }}>
       {children}
     </AuthContext.Provider>
   );

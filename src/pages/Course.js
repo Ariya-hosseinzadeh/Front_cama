@@ -52,7 +52,7 @@ async function createCourse(formData){
         if(response.ok){
           
         let data = await response.json();
-        console.log(data)
+        
         setResponse({...data})
         setIsloading(false)
         }
@@ -60,7 +60,6 @@ async function createCourse(formData){
         if (!response.ok) {
           let errorData = await response.json(); // دریافت متن خطا از بک‌اند
           setIsloading(false)
-          console.log(errorData)
           throw errorData; // ارسال خطا به بخش catch
           
         }
@@ -106,6 +105,7 @@ async function requestCourse(courseData){
       }
 
 }
+
 const handleSubmit=(e)=>{
     e.preventDefault();
      setError({...{}})
