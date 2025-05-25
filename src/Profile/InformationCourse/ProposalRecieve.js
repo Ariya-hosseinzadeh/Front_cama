@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../components/Context/AuthContext"
-import DetialeInventaionRecieve from "../../components/DetaileInvetaionRecieve"
+import DetialeProposalRecieve from '../../components/DetialeProposalRecieve'
 import { data } from "react-router-dom"
 
 
 const ProposalRecieve=()=>{
     const [proposals,setProposals]=useState([])
-    const [selectInvitations,setSelectInvitations]=useState(null)
+    const [selectProposal,setSelectProposals]=useState(null)
     const {fetchWithAuth}=useContext(AuthContext)
     useEffect(
         ()=>{
@@ -46,21 +46,25 @@ const ProposalRecieve=()=>{
                 console.log(proposals)
             }
             {
-                selectInvitations===null?
+                selectProposal===null?
                 <div>
+                    
                 {
                     proposals.map(
                         (item) => 
-                        <button key={item.id} onClick={()=>setSelectInvitations(item.id)}>
+                        <button key={item.id} onClick={()=>setSelectProposals(item.id)}>
                             <ul key={item.id}>
                             <li>
-                                {item.Course_name}
+                                {item.course_name}
                             </li>
                             <li>
-                                {item.description}
+                                {item.user_proposal_name}
                             </li>
                             <li>
-                                {item.creator_name}
+                                {item.status}
+                            </li>
+                            <li>
+                                {item.created_at}
                             </li>
                         </ul>
                         </button>
@@ -68,7 +72,7 @@ const ProposalRecieve=()=>{
                 }
             </div>:
             <div>
-                <DetialeInventaionRecieve id={selectInvitations}/>
+                <DetialeProposalRecieve id={selectProposal}/>
             </div>
             }
         

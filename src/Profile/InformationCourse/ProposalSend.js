@@ -1,15 +1,16 @@
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../components/Context/AuthContext"
 import DetialeInventaionRecieve from "../../components/DetaileInvetaionRecieve"
+import DetialeProposalSend from "../../components/DetailProposalSend"
 
 
 const ProposalSend=()=>{
-    const [invitations,setInvitations]=useState([])
+    const [myProposal,setProposals]=useState([])
     const [selectInvitations,setSelectInvitations]=useState(null)
     const {fetchWithAuth}=useContext(AuthContext)
     useEffect(
         ()=>{
-            fetchWithAuth('https://127.0.0.1:8000/classroom/proposal-courses/',{
+            fetchWithAuth('https://127.0.0.1:8000/classroom/proposal-send/',{
                 method:'GET',
                 headers:{
                     'Content-Type': 'application/json'
@@ -29,7 +30,7 @@ const ProposalSend=()=>{
                 }
             )
             .then(
-                data=>setInvitations(data)
+                data=>setProposals(data)
             )
             .catch(
                 error=>console.log(error)
@@ -38,31 +39,40 @@ const ProposalSend=()=>{
     )
     return(
         <>
+        
             <div>
+                {
+                    console.log(myProposal)
+                }
             {
                 selectInvitations===null?
                 <div>
                 {
-                    invitations.map(
+                    myProposal.map(
                         (item) => 
-                        <button key={item.id} onClick={()=>setSelectInvitations(item.id)}>
-                            <ul key={item.id}>
-                            <li>
-                                {item.Course_name}
-                            </li>
-                            <li>
-                                {item.description}
-                            </li>
-                            <li>
-                                {item.creator_name}
-                            </li>
-                        </ul>
-                        </button>
+                        <div>
+                            <button key={item.id} onClick={()=>setSelectInvitations(item.id)}>
+                                <ul key={item.id}>
+                                    <li>
+                                        {item.course_name}
+                                    </li>
+                                    <li>
+                                        {item.message}
+                                    </li>
+                                    <li>
+                                        {item.status}
+                                    </li>
+                                </ul>
+                                tesst
+                            </button>
+                         </div>
+
+                        
                     )
                 }
             </div>:
             <div>
-                <DetialeInventaionRecieve id={selectInvitations}/>
+                <DetialeProposalSend id={selectInvitations}/>
             </div>
             }
         
